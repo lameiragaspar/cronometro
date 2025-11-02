@@ -1,134 +1,176 @@
 /* RESET + BASE --------------------------------------------------- */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  font-family: "WDXL Lubrifont SC", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  background: linear-gradient(to bottom, #1A1A2E, #161625);
-  color: #00EFFF;
+    width: 100%;
+    height: 100%;
+    /*font-family: "WDXL Lubrifont SC", sans-serif;*/
+    font-family: "Share Tech Mono", monospace;
+    font-weight: 600;
+    font-style: normal;
+    background: linear-gradient(to bottom, #1A1A2E, #161625);
+    color: #00EFFF;
 }
 
 /* LAYOUT ---------------------------------------------------------- */
 main {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #container {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 500px;
 }
 
 /* TIMER ----------------------------------------------------------- */
 .timer {
-  background: #121111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /*gap: 0.25em;*/
-  padding: 3.5rem 2.5rem;
-  font-size: clamp(2.5rem, 4vw + 1rem, 5rem);
-  border-radius: 20px 20px 0 0;
-  font-variant-numeric: tabular-nums;
+    background: #121111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*gap: 0.25em;*/
+    padding: 3.5rem 2.5rem;
+    font-size: clamp(2.5rem, 4vw + 1rem, 5rem);
+    border-radius: 20px 20px 0 0;
+    font-variant-numeric: tabular-nums;
 }
-
+.timer span#hora,
+.timer span#minute,
+.timer span#second{
+    width: clamp(2ch, 4vw, 5ch);
+    text-align: center;
+}
 .timer .separator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  position: relative;
-  top: -0.05em; /* alinhamento fino */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    position: relative;
+    top: -0.05em; /* alinhamento fino */
+}
+.timer div {
+    display: inline-block;
 }
 
 .timer small {
-  font-size: clamp(0.75rem, 1vw + 0.25rem, 1.25rem);
-  opacity: 0.85;
+    font-size: clamp(1rem, 2vw + 0.5rem, 2.5rem);
+    opacity: 0.85;
 }
 
 .timer small#mili-seconds {
-  font-size: clamp(1rem, 2vw + 0.5rem, 2.5rem);
+    display: inline-block; 
+    width: clamp(2.2ch, 2.9vw + 1ch, 4.4ch);
+    text-align: left;
+}
+
+.timer small:last-child {
+    font-size: clamp(0.75rem, 1vw + 0.25rem, 1.25rem);
 }
 
 /* OPTIONS / CONTROLS --------------------------------------------- */
 section.options {
-  background: #202020;
-  padding: 1rem 2rem 1.5rem;
-  border-radius: 0 0 20px 20px;
+    background: #202020;
+    padding: 1rem;
+    border-radius: 0 0 20px 20px;
 }
 
 .options .buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* BOTÕES ---------------------------------------------------------- */
-.buttons {
-  font-family: "Orbitron", sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-}
 
 .buttons div:first-child {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
 }
 
 .buttons button {
-  color: #fff;
-  width: 110px;
-  padding: 0.6rem 0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    width: 110px;
+    padding: 0.6rem 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
 }
 
 /* ESTILOS INDIVIDUAIS -------------------------------------------- */
 #start {
-  background: #2ecc71;
+    background: #2ecc71;
 }
 #start:hover {
-  background: #3fe37f;
-  box-shadow: 0 0 15px rgba(46, 204, 113, 0.6);
+    background: #3fe37f;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.6);
 }
 
 #stop {
-  background: #e74c3c;
+    background: #e74c3c;
 }
 #stop:hover {
-  background: #ff6655;
-  box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+    background: #ff6655;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
 }
 
 #restart {
-  background: #808080;
+    background: #808080;
 }
 #restart:hover {
-  background: #999;
+    background: #999;
 }
 
 #turns {
-  background: #4A90E2;
+    background: #4A90E2;
 }
 #turns:hover {
-  background: #5aa4ff;
-  box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+    background: #5aa4ff;
+    box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+}
+/* Número de voltas -------------------------------------------- */
+.voltas {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #121111;
+    border: 1px solid #9b9b9b50;
+    border-radius: 15px;
+}
+.voltas div{
+    width: 100%;
+    color: #fff;
+    padding: 2px 7px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    border-bottom: 1px solid #2d858b;
+    font-family: "Share Tech Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+.voltas div p, 
+.voltas div h4{
+    width: calc(100% / 2);
+    text-align: center;
+}
+.voltas div:last-child p{
+    
 }

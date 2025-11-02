@@ -1,63 +1,115 @@
 //Pegando ele elementos
 let start = document.getElementById("start");
-let miliSeconds = document.getElementById("mili-seconds");
 let restart = document.getElementById("restart");
+let voltas = document.getElementById("turns");
+let nVoltas = document.getElementById("Nturns")
+let miliSeconds = document.getElementById("mili-seconds");
 let hora = document.getElementById("hora");
 let minute = document.getElementById("minute");
 let second = document.getElementById("second");
-//Controla do DOM esperando o evento, click no caso
-start.addEventListener('click', startCont);
-restart.addEventListener('click', restartCot)
-let cont = 0;
-let contSecond = 0;
-let contMinutes = 0;
-let contHora = 0;
-let interval = null;
-const fulltime = 59
 
-function startCont () {
-    //window.alert("Botão de iniciar clicado");
-    if(start.id === "start"){
-        start.removeAttribute("id")
-        start.id = "stop"
-        start.innerText = "Pause"
-        interval = setInterval (() =>{
-            cont += 1;
-            if(cont > 99){
-                cont = 0 //reinicia a contagem dos mili-segundos
-                contSecond += 1
-                if(contSecond > fulltime){
-                    contSecond = 0 //reinicia a contagem dos segundos
-                    contMinutes += 1
-                    if(contMinutes > fulltime){
-                        contMinutes = 0
-                        contHora += 1
-                        if(contHora > 23){
-                            hora.innerText = "00"
-                            minute.innerText = "00"
-                            second.innerText = "00"
-                            miliSeconds.innerText = '.00'
-                        }
-                    }
-                    hora.innerText = String(contHora).padStart(2, 0)
-                }
-                minute.innerText = String(contMinutes).padStart(2, 0)
-            }
-            second.innerText = String(contSecond).padStart(2, 0)
-            miliSeconds.innerText = '.' + String(cont).padStart(2, 0);//Muda o valor do contador pra string e formata para .001, .002...
-        }, 1)
-        
-    }else{
-        start.removeAttribute("id");
-        start.id = "start"
-        start.innerText = "Start"
-        clearInterval(interval)
+//Variaveis de controle
+let tempoInicial = 0;
+let tempoAcumulado = 0;
+let numVoltas = 0;
+let rodando = false;
+let animationId = null;
+
+//Atualizando o display com base no tempo real
+const atualizarTempo = () =>{
+    const agora = performance.now();
+    const tempoDecorrido = agora - tempoInicial + tempoAcumulado;
+
+    const horas = Math.floor(tempoDecorrido / 3600000); //1hora = 3600.000 milisegundos
+    const minutos = Math.floor((tempoDecorrido % 3600000) / 60000);
+    const segundos = Math.floor((tempoDecorrido % 60000) / 1000);
+    const milisegundos = Math.floor((tempoDecorrido % 1000) / 10);
+
+    //Renderizando os valores
+    hora.innerText = String(horas).padStart(2, "0");
+    minute.innerText = String(minutos).padStart(2, "0");
+    second.innerText = String(segundos).padStart(2, "0");
+    miliSeconds.innerText = "." + String(milisegundos).padStart(2, "0");
+
+    if(rodando){
+        animationId = requestAnimationFrame(atualizarTempo);
     }
 }
 
-function restartCot () {
-    hora.innerText = "00"
-    minute.innerText = "00"
-    second.innerText = "00"
-    miliSeconds.innerText = '.000'
+//Start Pause
+function startCont () {
+    //window.alert("Botão de iniciar clicado");
+    if(!rodando){
+        //Start
+        rodando = true;
+        tempoInicial = performance.now()
+        start.id = "stop"
+        start.innerText = "Pause"
+        animationId = requestAnimationFrame(atualizarTempo)
+    } else{
+        //Pause
+        rodando = false;
+        tempoAcumulado += performance.now() - tempoInicial
+        start.id = "start";
+        start.innerText = "Start";
+        cancelAnimationFrame(animationId)
+    }
 }
+//Restart
+function restartCont () {
+    rodando = false;
+    tempoInicial = 0;
+    tempoAcumulado = 0;
+    cancelAnimationFrame(animationId);
+    hora.innerText = "00";
+    minute.innerText = "00";
+    second.innerText = "00";
+    miliSeconds.innerText = '.00';
+    start.id = "start";
+    start.innerText = "Start";
+    nVoltas.className = ""
+    nVoltas.innerText = ""
+}
+//Turns
+function guardarVolta(){
+    if(start.id === "start"){
+        alert("Inicie o Cronômetro!")
+    } else{
+        nVoltas.className = "voltas"
+        numVoltas += 1
+
+        let div2 =document.createElement('div')
+        let p1 = document.createElement('p')
+        let p2 = document.createElement('p')
+        p1.innerText = numVoltas
+        p2.innerText = `${hora.innerText}:${minute.innerText}:${second.innerText}${miliSeconds.innerText}`
+        div2.appendChild(p1)
+        div2.appendChild(p2)
+
+        if(nVoltas.innerText === ""){
+            //Cria os elementos e atribui valores
+            let div1 = document.createElement('div')
+            let _1h4 = document.createElement('h4')
+            let _2h4 = document.createElement('h4')
+            _1h4.innerText = "Voltas"
+            _2h4.innerText = "Tempo"
+            //Renderiza no DOM
+            div1.appendChild(_1h4)
+            div1.appendChild(_2h4)
+            nVoltas.appendChild(div1)
+            nVoltas.appendChild(div2)
+            
+            //nVoltas.innerHTML += div2.innerHTML
+        } else {
+            //nVoltas.innerHTML += div2.innerHTML
+            nVoltas.appendChild(div2)
+        }
+        //console.log(nVoltas)
+    }
+    
+}
+
+//Controla do DOM esperando o evento, click no caso
+start.addEventListener('click', startCont);
+restart.addEventListener('click', restartCont);
+voltas.addEventListener('click', guardarVolta)
