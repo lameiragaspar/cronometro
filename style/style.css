@@ -168,6 +168,6 @@ section.options {
     width: calc(100% / 2);
     text-align: center;
 }
-.voltas div:last-child p{
-    
+.voltas div p.tempo{
+
 }
